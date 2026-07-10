@@ -1,0 +1,62 @@
+/*
+ * zerodig · design tokens
+ * colour, type, space, and motion values, referenced by name across the build.
+ */
+
+:root {
+  /* ---- Colour · neutral grayscale, pulled off the synthetic extremes (#000/#fff avoided) ---- */
+  --color-paper:    oklch(14% 0.004 240);   /* canvas: near-black, faint cool cast, not pure #000 */
+  --color-paper-2:  oklch(18% 0.005 240);   /* raised surface (elevation via lightness, not shadow) */
+  --color-paper-3:  oklch(23% 0.006 240);   /* highest surface: hover fills, active inputs */
+  --color-ink:      oklch(94% 0.004 240);   /* primary text: off-white, not pure #fff */
+  --color-ink-dim:  oklch(70% 0.005 240);   /* secondary text, labels */
+  --color-ink-faint:oklch(50% 0.006 240);   /* comments, metadata, disabled */
+  --color-line:     oklch(30% 0.006 240);   /* hairline borders: the TUI grid */
+  --color-line-2:   oklch(40% 0.007 240);   /* stronger hairline on focus / active panel */
+
+  /* inversion is the accent mechanism: white block, black glyphs */
+  --color-invert-bg: var(--color-ink);
+  --color-invert-fg: var(--color-paper);
+
+  --color-focus:    var(--color-ink);        /* focus ring: white, ~15:1 on dark */
+
+  /* ---- Type · single mono face, hierarchy via weight/size/case ---- */
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+
+  /* ---- Scale · major third (1.25) from 16px ---- */
+  --text-xs:   0.75rem;    /* 12px · status chrome, badges */
+  --text-sm:   0.8125rem;  /* 13px · labels, meta */
+  --text-base: 0.9375rem;  /* 15px · body / inputs */
+  --text-md:   1.0625rem;  /* 17px · result titles */
+  --text-lg:   1.375rem;   /* 22px · section heads */
+  --text-xl:   1.9375rem;  /* 31px · big view counts */
+  --text-display: clamp(2rem, 4vw + 1rem, 3.25rem); /* boot line */
+
+  /* ---- Space · 4pt scale ---- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+
+  /* ---- Motion ---- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 110ms;
+  --dur-short: 200ms;
+  --dur-long:  380ms;
+
+  /* ---- Lines / radius · terminal = sharp ---- */
+  --rule: 1px solid var(--color-line);
+  --rule-strong: 1px solid var(--color-line-2);
+  --radius: 0;               /* no rounding: this is a text UI */
+
+  /* ---- z-scale ---- */
+  --z-base: 1;
+  --z-sticky: 10;
+  --z-overlay: 100;
+}

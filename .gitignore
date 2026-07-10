@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / deps (in case the project later grows a toolchain)
+node_modules/
+*.log
+
+# Local tooling / notes, never publish (keeps the repo free of assistant traces)
+CLAUDE.md
+.claude/

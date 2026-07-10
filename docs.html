@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced YouTube Search Docs: Filters &amp; API Key | zerodig</title>
+  <meta name="description" content="How to use zerodig, the advanced YouTube search tool: get a free API key, filter by view count, upload date, duration, license and category, and use the keyless YouTube URL mode." />
+  <meta name="keywords" content="advanced youtube search, youtube search filters, youtube data api key, youtube filter by views, youtube search by date, better youtube search" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://flazeiguess.github.io/zerodig/docs.html" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0d0d10" />
+  <meta name="application-name" content="zerodig" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" sizes="any" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="zerodig" />
+  <meta property="og:title" content="Advanced YouTube Search Docs: Filters &amp; API Key" />
+  <meta property="og:description" content="How to use zerodig's advanced YouTube search: API key setup, every filter, quota, and the keyless YouTube URL mode." />
+  <meta property="og:url" content="https://flazeiguess.github.io/zerodig/docs.html" />
+  <meta property="og:image" content="https://flazeiguess.github.io/zerodig/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://flazeiguess.github.io/zerodig/og-image.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=13" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the YouTube URL mode?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A mode that uses no API key and no quota. It builds a youtube.com search link from YouTube's own filters (sort, upload date, type, duration, and features like HD, Creative Commons, 4K and Live) and opens it on YouTube." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I find the least-viewed YouTube videos?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Set sort results to views ascending and optionally a max views cap. The YouTube API can only sort views descending, so the ascending sort is done locally, which surfaces near zero-view videos." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I filter YouTube by upload date and license?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use the date, region and language section to set a published-after and published-before window, and the video attributes section to pick a license such as Creative Commons, plus category, duration and definition." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it need a login or cost anything?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. zerodig is free and runs entirely in your browser. API mode needs a free YouTube Data API v3 key; the YouTube URL mode needs nothing at all." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header class="statusbar">
+    <div class="statusbar__inner">
+      <div class="statusbar__brand">
+        <a class="wordmark" href="./" aria-label="zerodig home">zerodig<span class="caret" aria-hidden="true">▚</span></a>
+        <a class="navlink" href="./">search</a>
+        <a class="navlink" href="docs.html" aria-current="page">docs</a>
+      </div>
+      <div class="statusbar__end">
+        <div class="statusbar__readout">
+          <span class="stat hide-sm">youtube data api v3 reference</span>
+        </div>
+        <a class="coffee" href="https://ko-fi.com/flazeiguess" target="_blank" rel="noopener" title="Buy me a coffee" aria-label="Buy me a coffee on Ko-fi">
+          <svg class="coffee__cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line class="steam steam--1" x1="6" y1="1" x2="6" y2="4" />
+            <line class="steam steam--2" x1="10" y1="1" x2="10" y2="4" />
+            <line class="steam steam--3" x1="14" y1="1" x2="14" y2="4" />
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+          </svg>
+          <span class="coffee__txt">buy me a coffee</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+
+    <section class="boot">
+      <p class="boot__prompt">user@youtube:~$ man zerodig</p>
+      <h1 class="boot__line">documentation</h1>
+      <p class="boot__sub">
+        Everything zerodig can do, how it talks to the YouTube Data API, and how to
+        keep your API key safe. No account, no server, no tracking.
+      </p>
+    </section>
+
+    <div class="docs">
+
+      <aside class="docs__toc">
+        <div class="docs__toc-label">contents</div>
+        <nav>
+          <a href="#start">01 · quick start</a>
+          <a href="#key">02 · get an api key</a>
+          <a href="#secure">03 · secure your key</a>
+          <a href="#how">04 · how it works</a>
+          <a href="#filters">05 · filter reference</a>
+          <a href="#local">06 · local filters &amp; sort</a>
+          <a href="#quota">07 · quota &amp; limits</a>
+          <a href="#privacy">08 · privacy</a>
+          <a href="#faq">09 · notes &amp; faq</a>
+        </nav>
+        <a class="btn btn--ghost btn--block" href="./">← back to search</a>
+      </aside>
+
+      <article class="docs__body">
+
+        <section class="doc" id="start">
+          <div class="doc__num">01</div>
+          <h2>Quick start</h2>
+          <p>zerodig is a client-side interface to the <b>YouTube Data API v3</b>. It runs
+             entirely in your browser and exposes every search filter the API offers, plus
+             local filters the API can't do (views, likes, length).</p>
+          <ol>
+            <li>Get a free API key (see <a href="#key">§02</a>).</li>
+            <li>Paste it into the <b>key</b> field on the search page and hit <b>Save</b>. It is
+                stored only in your browser (<code>localStorage</code>).</li>
+            <li>Type a query, pick a <b>type</b> (video / channel / playlist), tune the filters,
+                and hit <b>Search</b>. Use <b>Load more</b> to page deeper into results.</li>
+          </ol>
+          <h3>Presets</h3>
+          <p>One-click filter setups. Click one to apply its filters, then hit <b>Search</b>:</p>
+          <ul>
+            <li><b>Hidden Gems</b>: under 1,000 views and at least a year old, sorted fewest-views-first.</li>
+            <li><b>Fresh Drops</b>: uploaded in the last 7 days, newest first.</li>
+            <li><b>Deep Dives</b>: long videos (20min+), most-viewed first.</li>
+          </ul>
+          <p>Hit <b>+ save current</b> to store your own filter setup as a custom preset (the query is
+             left out, so it works on any search). To save a whole search including its query, run it
+             and hit <b>☆ star</b> above the results; starred searches are listed under
+             <b>★ starred searches</b> in the builder, one click to re-run.</p>
+        </section>
+
+        <section class="doc" id="key">
+          <div class="doc__num">02</div>
+          <h2>Get an API key (free)</h2>
+          <p>The default quota is 10,000 units per day and needs no billing account.</p>
+          <ol>
+            <li>Open the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console ↗</a> and create or select a project.</li>
+            <li>Enable the API: <a href="https://console.cloud.google.com/apis/library/youtube.googleapis.com" target="_blank" rel="noopener">YouTube Data API v3 library ↗</a> → <b>Enable</b>.</li>
+            <li>Create the key: <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">APIs &amp; Services → Credentials ↗</a> → <b>Create credentials → API key</b>.</li>
+            <li>Copy the key, paste it into zerodig, hit <b>Save</b>.</li>
+          </ol>
+          <p>Then lock it down (see <a href="#secure">§03</a>).</p>
+        </section>
+
+        <section class="doc" id="secure">
+          <div class="doc__num">03</div>
+          <h2>Secure your key</h2>
+          <p>Because zerodig is a static site, the key travels only to Google, but anyone who
+             opens the page and looks at the browser's network tab can read it while you use it.
+             Restrict it so a leaked key is useless to others:</p>
+          <ol>
+            <li>Open your key in
+                <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Credentials ↗</a>.</li>
+            <li><b>Application restrictions → HTTP referrers</b>, add:
+                <br /><code>https://flazeiguess.github.io/zerodig/*</code>
+                <br />(and <code>http://localhost:*</code> if you run it locally).</li>
+            <li><b>API restrictions → Restrict key</b> → select only <b>YouTube Data API v3</b>.</li>
+            <li>Save. Referrer + API restrictions mean the key only works from your page, only for this API.</li>
+          </ol>
+          <div class="callout">
+            <b>Want it fully hidden?</b> Move the two fetch calls behind a tiny proxy
+            (Cloudflare Worker / Django) that holds the key server-side. The frontend logic
+            stays identical; only the request origin changes.
+          </div>
+        </section>
+
+        <section class="doc" id="how">
+          <div class="doc__num">04</div>
+          <h2>How it works</h2>
+          <p>The API can't sort or filter by view count, likes or exact length, so zerodig runs a
+             two-stage workflow, entirely client-side:</p>
+          <ol>
+            <li><b>Search</b> via <a href="https://developers.google.com/youtube/v3/docs/search/list" target="_blank" rel="noopener"><code>search.list</code> ↗</a>
+                with your native filters. Costs <b>100 units</b> per page, returns up to 50 ids.</li>
+            <li><b>Enrich</b>: depending on result type, one call fetches the details the search
+                result lacks (<b>1 unit</b> each): <code>videos.list</code> (statistics + length),
+                <code>channels.list</code> (subscribers, video count) or <code>playlists.list</code> (item count).</li>
+            <li><b>Filter &amp; sort locally</b>: apply your views / likes / length filters and re-sort
+                the enriched results (see <a href="#local">§06</a>).</li>
+            <li><b>Auto-page</b>: follow <code>nextPageToken</code> until it reaches your <b>dig depth</b>
+                (pages per run) or <b>stop-after</b> target. <b>Load more</b> resumes from where it stopped.</li>
+          </ol>
+          <p>The live console on the search page prints every page fetched and the running quota cost.</p>
+        </section>
+
+        <section class="doc" id="filters">
+          <div class="doc__num">05</div>
+          <h2>Filter reference: native (server-side)</h2>
+          <p>These map directly onto <code>search.list</code> parameters. Video-only rows require
+             <b>type = video</b> and hide automatically for channel / playlist searches.</p>
+          <div class="doc__table">
+            <table>
+              <thead><tr><th>filter</th><th>parameter</th><th>values</th></tr></thead>
+              <tbody>
+                <tr><td>query</td><td><code>q</code></td><td><code>"exact phrase"</code>, <code>a|b</code> (OR), <code>-exclude</code></td></tr>
+                <tr><td>exclude words</td><td><code>q</code></td><td>each word is appended as <code>-word</code></td></tr>
+                <tr><td>type</td><td><code>type</code></td><td>video · channel · playlist · all</td></tr>
+                <tr><td>order</td><td><code>order</code></td><td>relevance · date · rating · viewCount · title · videoCount</td></tr>
+                <tr><td>published after</td><td><code>publishedAfter</code></td><td>date (RFC 3339)</td></tr>
+                <tr><td>published before</td><td><code>publishedBefore</code></td><td>date (RFC 3339)</td></tr>
+                <tr><td>region</td><td><code>regionCode</code></td><td>ISO 3166-1 alpha-2 (US, DE, JP …)</td></tr>
+                <tr><td>language</td><td><code>relevanceLanguage</code></td><td>ISO 639-1 (en, de, ja …)</td></tr>
+                <tr><td>safe search</td><td><code>safeSearch</code></td><td>moderate · none · strict</td></tr>
+                <tr><td>within channel</td><td><code>channelId</code></td><td>a channel id (UC…)</td></tr>
+                <tr><td>duration</td><td><code>videoDuration</code></td><td>short (&lt;4m) · medium (4-20m) · long (&gt;20m)</td></tr>
+                <tr><td>definition</td><td><code>videoDefinition</code></td><td>high (HD) · standard (SD)</td></tr>
+                <tr><td>dimension</td><td><code>videoDimension</code></td><td>2d · 3d</td></tr>
+                <tr><td>captions</td><td><code>videoCaption</code></td><td>closedCaption · none</td></tr>
+                <tr><td>license</td><td><code>videoLicense</code></td><td>youtube · creativeCommon</td></tr>
+                <tr><td>video type</td><td><code>videoType</code></td><td>movie · episode</td></tr>
+                <tr><td>category</td><td><code>videoCategoryId</code></td><td>Music, Gaming, Education, News …</td></tr>
+                <tr><td>event</td><td><code>eventType</code></td><td>live · upcoming · completed</td></tr>
+                <tr><td>embeddable</td><td><code>videoEmbeddable</code></td><td>true</td></tr>
+                <tr><td>syndicated</td><td><code>videoSyndicated</code></td><td>true (plays outside youtube.com)</td></tr>
+                <tr><td>paid promotion</td><td><code>videoPaidProductPlacement</code></td><td>true</td></tr>
+                <tr><td>location</td><td><code>location</code> + <code>locationRadius</code></td><td>lat,lng + e.g. 25km</td></tr>
+                <tr><td>per page</td><td><code>maxResults</code></td><td>1-50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc" id="local">
+          <div class="doc__num">06</div>
+          <h2>Local filters &amp; sort (client-side)</h2>
+          <p>The API offers none of these, so zerodig applies them after fetching statistics.
+             They act on <b>video</b> results; channels and playlists pass through unfiltered.</p>
+          <div class="doc__table">
+            <table>
+              <thead><tr><th>control</th><th>effect</th></tr></thead>
+              <tbody>
+                <tr><td>min / max views</td><td>keep videos within a view range</td></tr>
+                <tr><td>min likes</td><td>keep videos with at least N likes</td></tr>
+                <tr><td>min / max length</td><td>keep videos within a length range, in seconds</td></tr>
+                <tr><td>sort results</td><td>re-order locally: views ↑ / views ↓ / likes ↓ / newest / oldest / longest / shortest</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <b>order vs. sort.</b> <b>order</b> is the API's ranking; it decides <i>which</i> 50
+            results each page returns. <b>sort results</b> re-orders what you've already fetched
+            (including views ascending, which the API can't do). Use both together: e.g. order by
+            <code>date</code>, then sort locally by <code>views ↑</code>.
+          </div>
+        </section>
+
+        <section class="doc" id="quota">
+          <div class="doc__num">07</div>
+          <h2>Quota &amp; limits</h2>
+          <p>Every project gets <b>10,000 units per day</b> by default (resets at midnight Pacific).
+             zerodig tracks today's usage in the status bar and footer.</p>
+          <div class="doc__table">
+            <table>
+              <thead><tr><th>call</th><th>cost</th></tr></thead>
+              <tbody>
+                <tr><td>search.list</td><td>100 units per page</td></tr>
+                <tr><td>videos / channels / playlists .list</td><td>1 unit per page</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>So one page costs ~101-103 units. A <b>dig depth</b> of 3 is roughly <b>309 units</b>;
+             the default budget allows about 30 such runs per day. The
+             <a href="https://developers.google.com/youtube/v3/getting-started#quota" target="_blank" rel="noopener">quota docs ↗</a>
+             explain how to request more if you need it.</p>
+          <div class="callout">
+            <b>Running low?</b> Lower the dig depth, narrow the query, or keep a second API key
+            (from another project) as a reserve.
+          </div>
+        </section>
+
+        <section class="doc" id="privacy">
+          <div class="doc__num">08</div>
+          <h2>Privacy</h2>
+          <p>zerodig has no backend. There is no account, no analytics, no cookies, and no request
+             ever goes anywhere except directly to Google's API from your browser.</p>
+          <p>Three things live in your browser's <code>localStorage</code> and nowhere else: your
+             <b>API key</b>, your last <b>filter config</b>, and today's <b>quota counter</b>.
+             Clearing your browser data for this site removes all of them.</p>
+        </section>
+
+        <section class="doc" id="faq">
+          <div class="doc__num">09</div>
+          <h2>Notes &amp; FAQ</h2>
+          <h3>The two modes: API vs YouTube URL</h3>
+          <p><b>API search</b> (default) uses your API key, shows results in-app, and has the full filter
+             set plus local view/like/length filters. <b>YouTube URL</b> uses no key and no quota: it
+             builds a youtube.com search link from YouTube's own filters (sort, upload date, type,
+             duration, and features like HD, Creative Commons, 4K, Live) and opens it on YouTube. Fewer
+             filters and no in-app results, but unlimited use. Switch with the <b>mode</b> toggle at the
+             top of the builder.</p>
+          <h3>Deep dig: getting past YouTube's ~500-result limit</h3>
+          <p>The Search API returns at most about 500 results per query. Turn on <b>deep dig</b> (in
+             <i>fetching &amp; depth</i>) and zerodig splits your date range into slices and digs each one
+             separately, so you can pull thousands of low-view videos instead of 500. Pick the number of
+             <b>date slices</b> (more = deeper and pricier); the cost is slices × depth × 100 units and is
+             shown live. Results stream in slice by slice.</p>
+          <h3>Memory: never dig the same hole twice</h3>
+          <p>zerodig remembers every video you open, dismiss (the <b>×</b> on a result), or <b>mark these
+             seen</b>, in your browser. With <b>hide seen</b> on (default), each new dig skips what you have
+             already seen, so you never wade through the same results twice. Use <b>mark these seen</b> to
+             bury a whole page at once, the <b>×</b> to bury one, and <b>reset</b> to forget everything. It
+             is all local to your browser.</p>
+          <h3>Does zerodig save API quota?</h3>
+          <p>Yes, through a <b>cache</b>. Every search page you fetch is stored in your browser, so repeating
+             the same search (same query and native filters) within the cache window is served locally at
+             <b>0 units</b>. Changing a local filter (views, likes, length) also reuses the cache, since those
+             are applied after fetching. Set the cache window in <i>fetching &amp; depth</i>, watch the live
+             <b>cache hit (0u)</b> line in the console, or turn the cache off for fresh live data. Deep dig
+             and memory do <b>not</b> save quota by themselves; the cache is the real saver.</p>
+          <h3>What is the budget guard and the "left today" number?</h3>
+          <p>Every project gets 10,000 units a day. zerodig shows how many are <b>left today</b> next to the
+             estimate and asks for confirmation before a dig that would exceed the remaining budget, which is
+             handy for deep dig.</p>
+          <h3>Can I use more than one API key?</h3>
+          <p>Yes. Put several keys in the key field, separated by spaces. When one hits its daily quota,
+             zerodig automatically switches to the next, multiplying your effective budget.</p>
+          <h3>Why do some videos show “n/a” views?</h3>
+          <p>The uploader hid the view count. zerodig shows <code>n/a</code> and sorts them last;
+             they're excluded when a numeric view filter is active, since the value can't be verified.</p>
+          <h3>Why did my video filters disappear?</h3>
+          <p>Duration, definition, category and the other video attributes only apply to
+             <b>type = video</b>. They hide when you search channels or playlists.</p>
+          <h3>How do I search only Creative Commons music from 2010?</h3>
+          <p>type <code>video</code>, category <code>Music</code>, license <code>creativeCommon</code>,
+             published after <code>2010-01-01</code> / before <code>2010-12-31</code>.</p>
+          <h3>Can I find the least-viewed results?</h3>
+          <p>Yes: set <b>sort results</b> to <code>views ↑</code> (and optionally a <b>max views</b>
+             cap). The API can only sort views descending; the ascending sort is done locally.</p>
+          <h3>Operators in the query box</h3>
+          <p><code>"exact phrase"</code> matches the phrase, <code>a|b</code> means a OR b, and a
+             leading <code>-</code> excludes a term. The exclude-words field adds <code>-</code> for you.</p>
+          <h3>Are related-video searches supported?</h3>
+          <p>No. YouTube removed the <code>relatedToVideoId</code> parameter in 2023, so no tool can
+             offer it anymore.</p>
+          <p style="margin-top:var(--space-md)"><a href="https://github.com/FlazeIGuess/zerodig" target="_blank" rel="noopener">Source on GitHub ↗</a> · <a href="https://developers.google.com/youtube/v3/docs/search/list" target="_blank" rel="noopener">YouTube search.list docs ↗</a></p>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer__inner">
+      <span>zerodig · advanced youtube search</span>
+      <span class="footer__sep">·</span>
+      <a href="./">search</a>
+      <span class="footer__sep">·</span>
+      <span>no server · no tracking · your key stays local</span>
+      <span class="footer__sep">·</span>
+      <a href="https://github.com/FlazeIGuess/zerodig/issues/new" target="_blank" rel="noopener">found an issue? ↗</a>
+      <span class="footer__sep">·</span>
+      <a href="https://github.com/FlazeIGuess/zerodig" target="_blank" rel="noopener">github ↗</a>
+      <span class="footer__sep">·</span>
+      <a class="foot-coffee" href="https://ko-fi.com/flazeiguess" target="_blank" rel="noopener">buy me a coffee ↗</a>
+    </div>
+  </footer>
+
+</body>
+</html>

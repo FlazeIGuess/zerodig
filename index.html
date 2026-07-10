@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced YouTube Search: Filters, Views &amp; Date | zerodig</title>
+  <meta name="description" content="A better YouTube search with advanced filters. Filter YouTube by view count, upload date, duration, likes, license and category, sort results any way, or find zero-view videos. Free, client-side, no login." />
+  <meta name="keywords" content="advanced youtube search, better youtube search, youtube search filters, youtube filter by views, youtube search by date, youtube advanced search tool, filter youtube search, zero view videos, youtube search by view count" />
+  <meta name="author" content="zerodig" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://flazeiguess.github.io/zerodig/" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0d0d10" />
+  <meta name="application-name" content="zerodig" />
+  <meta name="apple-mobile-web-app-title" content="zerodig" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" sizes="any" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="mask-icon" href="favicon.svg" color="#0d0d10" />
+  <link rel="sitemap" type="application/xml" href="/zerodig/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="zerodig" />
+  <meta property="og:title" content="Advanced YouTube Search: Filters, Views &amp; Date" />
+  <meta property="og:description" content="A better YouTube search with the filters YouTube hides: view count, upload date, duration, license and category. Find zero-view videos. Free and client-side." />
+  <meta property="og:url" content="https://flazeiguess.github.io/zerodig/" />
+  <meta property="og:image" content="https://flazeiguess.github.io/zerodig/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="zerodig, advanced YouTube search" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Advanced YouTube Search: Filters, Views &amp; Date" />
+  <meta name="twitter:description" content="A better YouTube search with advanced filters YouTube doesn't give you: views, date, duration, license, category. Find zero-view videos. Free." />
+  <meta name="twitter:image" content="https://flazeiguess.github.io/zerodig/og-image.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=13" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://flazeiguess.github.io/zerodig/#website",
+        "url": "https://flazeiguess.github.io/zerodig/",
+        "name": "zerodig",
+        "description": "Advanced YouTube search and filters"
+      },
+      {
+        "@type": "WebApplication",
+        "name": "zerodig",
+        "alternateName": "Advanced YouTube Search",
+        "url": "https://flazeiguess.github.io/zerodig/",
+        "isPartOf": { "@id": "https://flazeiguess.github.io/zerodig/#website" },
+        "description": "A better YouTube search with advanced filters: filter by view count, upload date, duration, likes, license and category, sort results any way, and find zero-view videos. Free and client-side.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "Filter YouTube by view count",
+          "Filter by upload date range",
+          "Filter by duration, definition, license and category",
+          "Find zero-view and low-view videos",
+          "Search videos, channels and playlists",
+          "Sort results by views, likes, date or length",
+          "Keyless mode that builds a youtube.com search URL from YouTube filters"
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-mode="api">
+
+  <!-- terminal status bar -->
+  <header class="statusbar">
+    <div class="statusbar__inner">
+      <div class="statusbar__brand">
+        <a class="wordmark" href="./" aria-label="zerodig home">zerodig<span class="caret" aria-hidden="true">▚</span></a>
+        <a class="navlink" href="docs.html">docs</a>
+      </div>
+      <div class="statusbar__end">
+        <div class="statusbar__readout" aria-live="polite">
+          <span class="stat hide-sm" id="stat-key" data-ok="false">KEY&nbsp;<b>?</b></span>
+          <span class="stat" id="stat-quota">QUOTA·TODAY&nbsp;<b>0</b></span>
+          <span class="stat hide-sm" id="stat-found">RESULTS&nbsp;<b>0</b></span>
+        </div>
+        <a class="coffee" href="https://ko-fi.com/flazeiguess" target="_blank" rel="noopener" title="Buy me a coffee" aria-label="Buy me a coffee on Ko-fi">
+          <svg class="coffee__cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line class="steam steam--1" x1="6" y1="1" x2="6" y2="4" />
+            <line class="steam steam--2" x1="10" y1="1" x2="10" y2="4" />
+            <line class="steam steam--3" x1="14" y1="1" x2="14" y2="4" />
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+          </svg>
+          <span class="coffee__txt">buy me a coffee</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell" id="top">
+
+    <!-- boot line -->
+    <section class="boot">
+      <p class="boot__prompt">user@youtube:~$ ./zerodig --all-filters</p>
+      <h1 class="boot__line"><span id="boot-text"></span><span class="caret" aria-hidden="true">&nbsp;</span></h1>
+      <p class="boot__sub">
+        Every filter the YouTube Data API exposes, in one place. Search
+        <b>videos, channels &amp; playlists</b>; narrow by date, region, duration, license,
+        category and more; then refine locally by <b>views, likes &amp; length</b>. Runs
+        entirely in your browser.
+      </p>
+    </section>
+
+    <!-- workbench -->
+    <div class="work">
+
+      <!-- LEFT · query builder -->
+      <form class="builder panel" id="builder" autocomplete="off" data-type="video">
+        <div class="panel__label"><span>query builder</span><b>/search</b></div>
+        <div class="panel__body">
+
+          <!-- mode -->
+          <div class="field">
+            <label class="field__label"><span>mode</span></label>
+            <div class="modetabs" role="group" aria-label="search mode">
+              <button type="button" class="modetab" data-mode="api" aria-pressed="true">API search</button>
+              <button type="button" class="modetab" data-mode="url" aria-pressed="false">YouTube URL</button>
+            </div>
+            <p class="hint-note url-only" style="margin-bottom:0">No API key. Builds a youtube.com search link from YouTube's own filters and opens it. No quota, unlimited use, fewer filters.</p>
+          </div>
+
+          <!-- API key -->
+          <div class="field api-only">
+            <label class="field__label" for="apikey">
+              <span>youtube data api v3 key(s)</span>
+              <button type="button" class="hint" id="toggle-key" style="background:none;border:0;cursor:pointer;color:inherit;">show</button>
+            </label>
+            <div class="key-row">
+              <input class="input" id="apikey" type="password" placeholder="AIza…" spellcheck="false" />
+              <button type="button" class="btn btn--ghost" id="save-key">Save</button>
+            </div>
+            <p class="hint-note" style="margin-top:var(--space-2xs)">Got more than one key? Separate them with spaces to auto-rotate when one runs out of quota.</p>
+            <p class="warn">
+              <b>Heads up:</b> static site, so the key lives in your browser only
+              (localStorage) and is sent only to Google. Restrict it to the
+              <b>YouTube Data API v3</b> + your domain in the
+              <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Google Cloud console ↗</a>.
+              <a href="docs.html">Full setup guide →</a>
+            </p>
+          </div>
+
+          <!-- query -->
+          <div class="field">
+            <label class="field__label" for="q"><span>search query</span><span class="hint">"exact" · a|b · -exclude</span></label>
+            <div class="prompt-input">
+              <input class="input" id="q" type="text" placeholder="lo-fi live set" />
+            </div>
+          </div>
+
+          <!-- exclude -->
+          <div class="field">
+            <label class="field__label" for="exclude"><span>exclude words</span><span class="hint">space-separated</span></label>
+            <input class="input" id="exclude" type="text" placeholder="reaction shorts" />
+            <div class="echo">q&nbsp;=&nbsp;<b id="q-echo">(empty)</b></div>
+          </div>
+
+          <!-- presets -->
+          <div class="field api-only">
+            <label class="field__label"><span>presets</span><button type="button" class="linklike" id="save-preset">+ save current</button></label>
+            <div class="presets" id="presets-row">
+              <button type="button" class="preset" data-preset="gems">
+                <b>Hidden Gems</b><small>&lt;1k views · 1yr+ old</small>
+              </button>
+              <button type="button" class="preset" data-preset="fresh">
+                <b>Fresh Drops</b><small>new this week</small>
+              </button>
+              <button type="button" class="preset" data-preset="deep">
+                <b>Deep Dives</b><small>20min+ · popular</small>
+              </button>
+            </div>
+          </div>
+
+          <!-- starred searches -->
+          <details class="adv api-only" id="stars-details">
+            <summary>★ starred searches (<span id="stars-count">0</span>)</summary>
+            <div class="adv__body">
+              <div class="stars-list" id="stars-list"></div>
+            </div>
+          </details>
+
+          <!-- URL-mode filters -->
+          <div class="url-only">
+            <div class="row" style="margin-bottom:var(--space-md)">
+              <div class="field" style="margin:0">
+                <label class="field__label" for="u-sort"><span>sort by</span></label>
+                <select class="input" id="u-sort">
+                  <option value="relevance" selected>relevance</option>
+                  <option value="date">upload date</option>
+                  <option value="views">view count</option>
+                  <option value="rating">rating</option>
+                </select>
+              </div>
+              <div class="field" style="margin:0">
+                <label class="field__label" for="u-date"><span>upload date</span></label>
+                <select class="input" id="u-date">
+                  <option value="any" selected>any</option>
+                  <option value="hour">last hour</option>
+                  <option value="today">today</option>
+                  <option value="week">this week</option>
+                  <option value="month">this month</option>
+                  <option value="year">this year</option>
+                </select>
+              </div>
+            </div>
+            <div class="row" style="margin-bottom:var(--space-md)">
+              <div class="field" style="margin:0">
+                <label class="field__label" for="u-type"><span>type</span></label>
+                <select class="input" id="u-type">
+                  <option value="any" selected>any</option>
+                  <option value="video">video</option>
+                  <option value="channel">channel</option>
+                  <option value="playlist">playlist</option>
+                  <option value="movie">movie</option>
+                </select>
+              </div>
+              <div class="field" style="margin:0">
+                <label class="field__label" for="u-duration"><span>duration</span></label>
+                <select class="input" id="u-duration">
+                  <option value="any" selected>any</option>
+                  <option value="short">under 4 min</option>
+                  <option value="medium">4-20 min</option>
+                  <option value="long">over 20 min</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field__label"><span>features</span></label>
+              <div class="u-feats">
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="4" /><span>HD</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="5" /><span>Subtitles/CC</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="6" /><span>Creative Commons</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="8" /><span>Live</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="14" /><span>4K</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="15" /><span>360°</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="26" /><span>VR180</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="7" /><span>3D</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="25" /><span>HDR</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="23" /><span>Location</span></label>
+                <label class="u-feat-label"><input type="checkbox" class="u-feat" data-field="9" /><span>Purchased</span></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- type + order -->
+          <div class="row api-only" style="margin-bottom:var(--space-md)">
+            <div class="field" style="margin:0">
+              <label class="field__label" for="type"><span>type</span></label>
+              <select class="input" id="type">
+                <option value="video" selected>video</option>
+                <option value="channel">channel</option>
+                <option value="playlist">playlist</option>
+                <option value="video,channel,playlist">all</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0">
+              <label class="field__label" for="order"><span>order</span><span class="hint">api rank</span></label>
+              <select class="input" id="order">
+                <option value="relevance" selected>relevance</option>
+                <option value="date">date</option>
+                <option value="rating">rating</option>
+                <option value="viewCount">view count</option>
+                <option value="title">title</option>
+                <option value="videoCount">video count (channels)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- result filters (client-side) -->
+          <details class="adv api-only">
+            <summary>result filters &middot; views · likes · length</summary>
+            <div class="adv__body">
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="min-views"><span>min views</span></label>
+                  <input class="input" id="min-views" type="number" inputmode="numeric" min="0" placeholder="any" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="max-views"><span>max views</span></label>
+                  <input class="input" id="max-views" type="number" inputmode="numeric" min="0" placeholder="any" />
+                </div>
+              </div>
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="min-likes"><span>min likes</span></label>
+                  <input class="input" id="min-likes" type="number" inputmode="numeric" min="0" placeholder="any" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="sort"><span>sort results</span><span class="hint">local</span></label>
+                  <select class="input" id="sort">
+                    <option value="api" selected>api order</option>
+                    <option value="views_asc">views ↑ (fewest)</option>
+                    <option value="views_desc">views ↓ (most)</option>
+                    <option value="likes_desc">likes ↓</option>
+                    <option value="date_desc">newest</option>
+                    <option value="date_asc">oldest</option>
+                    <option value="dur_desc">longest</option>
+                    <option value="dur_asc">shortest</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="min-dur"><span>min length</span><span class="hint">sec</span></label>
+                  <input class="input" id="min-dur" type="number" inputmode="numeric" min="0" placeholder="any" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="max-dur"><span>max length</span><span class="hint">sec</span></label>
+                  <input class="input" id="max-dur" type="number" inputmode="numeric" min="0" placeholder="any" />
+                </div>
+              </div>
+              <p class="hint-note">applied locally to video results after fetching statistics.</p>
+            </div>
+          </details>
+
+          <!-- date · region · language -->
+          <details class="adv api-only">
+            <summary>date &middot; region &middot; language</summary>
+            <div class="adv__body">
+              <div class="row" style="margin-bottom:var(--space-2xs)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="after"><span>published after</span></label>
+                  <input class="input" id="after" type="date" min="2005-01-01" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="before"><span>published before</span></label>
+                  <input class="input" id="before" type="date" min="2005-01-01" />
+                </div>
+              </div>
+              <div class="chips" role="group" aria-label="quick date ranges">
+                <button type="button" class="chip" data-days="7">last 7d</button>
+                <button type="button" class="chip" data-days="30">last 30d</button>
+                <button type="button" class="chip" data-days="365">last year</button>
+                <button type="button" class="chip" data-days="">clear</button>
+              </div>
+              <div class="row" style="margin:var(--space-md) 0 0">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="region"><span>region</span><span class="hint">e.g. US, DE</span></label>
+                  <input class="input" id="region" type="text" maxlength="2" placeholder="" spellcheck="false" style="text-transform:uppercase" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="lang"><span>language</span><span class="hint">e.g. en, de</span></label>
+                  <input class="input" id="lang" type="text" maxlength="5" placeholder="" spellcheck="false" />
+                </div>
+              </div>
+              <div class="field" style="margin:var(--space-md) 0 0">
+                <label class="field__label" for="safe"><span>safe search</span></label>
+                <select class="input" id="safe">
+                  <option value="moderate" selected>moderate</option>
+                  <option value="none">none</option>
+                  <option value="strict">strict</option>
+                </select>
+              </div>
+            </div>
+          </details>
+
+          <!-- video attributes (video-only) -->
+          <details class="adv video-only api-only">
+            <summary>video attributes</summary>
+            <div class="adv__body">
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="v-duration"><span>duration</span></label>
+                  <select class="input" id="v-duration">
+                    <option value="any" selected>any</option>
+                    <option value="short">short &lt; 4m</option>
+                    <option value="medium">medium 4-20m</option>
+                    <option value="long">long &gt; 20m</option>
+                  </select>
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="v-definition"><span>definition</span></label>
+                  <select class="input" id="v-definition">
+                    <option value="any" selected>any</option>
+                    <option value="high">HD</option>
+                    <option value="standard">SD</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="v-dimension"><span>dimension</span></label>
+                  <select class="input" id="v-dimension">
+                    <option value="any" selected>any</option>
+                    <option value="2d">2D</option>
+                    <option value="3d">3D</option>
+                  </select>
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="v-caption"><span>captions</span></label>
+                  <select class="input" id="v-caption">
+                    <option value="any" selected>any</option>
+                    <option value="closedCaption">has captions</option>
+                    <option value="none">no captions</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="v-license"><span>license</span></label>
+                  <select class="input" id="v-license">
+                    <option value="any" selected>any</option>
+                    <option value="youtube">standard youtube</option>
+                    <option value="creativeCommon">creative commons</option>
+                  </select>
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="v-type"><span>video type</span></label>
+                  <select class="input" id="v-type">
+                    <option value="any" selected>any</option>
+                    <option value="movie">movie</option>
+                    <option value="episode">episode</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field" style="margin-bottom:var(--space-md)">
+                <label class="field__label" for="category"><span>category</span></label>
+                <select class="input" id="category">
+                  <option value="" selected>any</option>
+                  <option value="1">Film &amp; Animation</option>
+                  <option value="2">Autos &amp; Vehicles</option>
+                  <option value="10">Music</option>
+                  <option value="15">Pets &amp; Animals</option>
+                  <option value="17">Sports</option>
+                  <option value="19">Travel &amp; Events</option>
+                  <option value="20">Gaming</option>
+                  <option value="22">People &amp; Blogs</option>
+                  <option value="23">Comedy</option>
+                  <option value="24">Entertainment</option>
+                  <option value="25">News &amp; Politics</option>
+                  <option value="26">Howto &amp; Style</option>
+                  <option value="27">Education</option>
+                  <option value="28">Science &amp; Technology</option>
+                  <option value="29">Nonprofits &amp; Activism</option>
+                </select>
+              </div>
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="event"><span>event</span></label>
+                  <select class="input" id="event">
+                    <option value="" selected>any</option>
+                    <option value="live">live now</option>
+                    <option value="upcoming">upcoming</option>
+                    <option value="completed">completed</option>
+                  </select>
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="embeddable"><span>embeddable</span></label>
+                  <select class="input" id="embeddable">
+                    <option value="any" selected>any</option>
+                    <option value="true">only embeddable</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="syndicated"><span>syndicated</span><span class="hint">plays off-site</span></label>
+                  <select class="input" id="syndicated">
+                    <option value="any" selected>any</option>
+                    <option value="true">only syndicated</option>
+                  </select>
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="ppp"><span>paid promotion</span></label>
+                  <select class="input" id="ppp">
+                    <option value="any" selected>any</option>
+                    <option value="true">only paid</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- scope & location -->
+          <details class="adv api-only">
+            <summary>scope &amp; location</summary>
+            <div class="adv__body">
+              <div class="field">
+                <label class="field__label" for="channel-id"><span>within channel id</span><span class="hint">UC…</span></label>
+                <input class="input" id="channel-id" type="text" placeholder="" spellcheck="false" />
+              </div>
+              <div class="row video-only">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="location"><span>location</span><span class="hint">lat,lng</span></label>
+                  <input class="input" id="location" type="text" placeholder="52.52,13.40" spellcheck="false" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="radius"><span>radius</span><span class="hint">e.g. 25km</span></label>
+                  <input class="input" id="radius" type="text" placeholder="25km" spellcheck="false" />
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- fetching & depth -->
+          <details class="adv api-only">
+            <summary>fetching &amp; depth</summary>
+            <div class="adv__body">
+              <div class="row" style="margin-bottom:var(--space-md)">
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="maxresults"><span>per page</span><span class="hint">1-50</span></label>
+                  <input class="input" id="maxresults" type="number" inputmode="numeric" min="1" max="50" value="50" />
+                </div>
+                <div class="field" style="margin:0">
+                  <label class="field__label" for="maxpages"><span>dig depth</span><span class="hint">×100 quota</span></label>
+                  <input class="input" id="maxpages" type="number" inputmode="numeric" min="1" max="20" value="3" />
+                </div>
+              </div>
+              <div class="field" style="margin:0">
+                <label class="field__label" for="target"><span>stop after</span><span class="hint">results</span></label>
+                <input class="input" id="target" type="number" inputmode="numeric" min="1" value="50" />
+              </div>
+
+              <label class="u-feat-label" style="display:flex;margin-top:var(--space-md)"><input type="checkbox" id="deep" /><span>deep dig (get past the ~500 limit)</span></label>
+              <div class="field" id="deep-opts" hidden>
+                <label class="field__label" for="slices"><span>date slices</span><span class="hint">more = deeper &amp; pricier</span></label>
+                <input class="input" id="slices" type="number" inputmode="numeric" min="2" max="40" value="8" />
+                <p class="hint-note">Splits your date range into slices and digs each one separately, so you get far past YouTube's ~500-result cap. Cost = slices × depth × 100 units. Results stream in as it runs.</p>
+              </div>
+
+              <label class="u-feat-label" style="display:flex;margin-top:var(--space-md)"><input type="checkbox" id="use-cache" checked /><span>use cache (0 quota on repeats)</span></label>
+              <div class="field" style="margin-top:var(--space-2xs)">
+                <label class="field__label" for="cache-ttl"><span>cache for</span><span class="hint">minutes</span></label>
+                <input class="input" id="cache-ttl" type="number" inputmode="numeric" min="1" value="60" />
+                <p class="hint-note">cached: <b id="cache-count">0</b> pages &middot; <button type="button" class="linklike" id="clear-cache">clear</button>. Repeat searches (same query + filters) come from your browser at <b>0 units</b>. Turn off for fresh live data.</p>
+              </div>
+
+              <p class="warn" style="border-left-color:var(--color-line)">
+                Each <b>page</b> costs 100 units (search) + up to 3 (enrich). Depth 3 ≈
+                <b>309 units</b>. Daily budget is 10,000. Live estimate below.
+              </p>
+            </div>
+          </details>
+
+        </div>
+
+        <div class="builder__run">
+          <div class="actions">
+            <button type="submit" class="btn btn--run btn--block api-only" id="run" data-state="default">
+              <span class="btn__spin" aria-hidden="true">▶</span><span id="run-label">Digging</span>
+            </button>
+            <button type="submit" class="btn btn--run btn--block url-only" id="open-yt">Open on YouTube ↗</button>
+            <button type="button" class="btn btn--ghost api-only" id="stop" hidden>Stop</button>
+          </div>
+          <p class="field__label api-only" style="margin-top:var(--space-2xs);justify-content:center;margin-bottom:0">
+            <span class="hint">est.&nbsp;<b id="quota-est" style="color:var(--color-ink)">~309</b>&nbsp;u&nbsp;·&nbsp;<b id="quota-left" style="color:var(--color-ink)">10,000</b>&nbsp;left today</span>
+          </p>
+          <p class="field__label url-only" style="margin-top:var(--space-2xs);justify-content:center;margin-bottom:0">
+            <span class="hint">no api key · no quota</span>
+          </p>
+        </div>
+      </form>
+
+      <!-- RIGHT · console + results -->
+      <section class="output">
+        <!-- URL preview (url mode) -->
+        <div class="panel url-only" id="url-panel">
+          <div class="panel__label"><span>youtube url</span><b>no api key</b></div>
+          <div class="panel__body">
+            <p class="hint-note" style="margin-top:0">Builds a youtube.com search link from YouTube's own filters (the <code>sp</code> parameter). No API key, no quota, unlimited. Fewer filters than API mode; results open on YouTube.</p>
+            <div class="url-box" id="yt-url"></div>
+            <div class="actions" style="margin-top:var(--space-sm)">
+              <button type="button" class="btn btn--ghost" id="copy-yt">Copy URL</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel console api-only">
+          <div class="panel__label"><span>console</span><b id="console-state">idle</b></div>
+          <div class="console__body" id="console" aria-live="polite" aria-label="search log" role="log">
+            <div class="logline logline--dim"><span class="lead">#</span><span>awaiting query. set a key, describe what you're looking for, hit Digging.</span></div>
+            <div class="logline"><span class="lead">&gt;</span><span class="cursor" aria-hidden="true"></span></div>
+          </div>
+        </div>
+
+        <div class="results api-only" id="results" hidden>
+          <div class="results__head">
+            <div class="results__count"><span id="result-n">0</span> <small id="result-scope">results</small></div>
+            <div class="results__head-right">
+              <label class="u-feat-label"><input type="checkbox" id="hide-seen" checked /><span>hide seen</span></label>
+              <button type="button" class="star-btn" id="star-btn" aria-pressed="false" disabled>☆ star</button>
+              <span class="results__sort" id="result-sort">api order</span>
+            </div>
+          </div>
+          <div class="results__mem">
+            <span>memory: <b id="seen-count">0</b> seen</span>
+            <button type="button" class="linklike" id="mark-all-seen">mark these seen</button>
+            <button type="button" class="linklike" id="reset-seen">reset</button>
+          </div>
+          <ol class="ledger" id="ledger"></ol>
+        </div>
+
+        <div class="empty api-only" id="empty" hidden>
+          <p><b>No results.</b></p>
+          <p style="margin-top:var(--space-2xs)">Loosen the filters, widen the date window, turn off <b>hide seen</b>, or increase dig depth and dig again.</p>
+        </div>
+
+        <div class="results__more api-only" id="more-wrap" hidden>
+          <button type="button" class="btn btn--block" id="dig-more">Load more ↓</button>
+          <p class="results__more-note">fetches the next pages, same query &amp; filters &middot; another ~<span id="more-est">309</span> units</p>
+        </div>
+
+      </section>
+
+    </div>
+
+    <section class="about">
+      <h2>A better YouTube search, with the filters YouTube hides</h2>
+      <p><b>zerodig</b> is a free, advanced YouTube search tool. It exposes every filter the YouTube Data API offers and adds the ones YouTube's own search will not: filter by <b>view count</b> (down to near zero-view videos), <b>upload date range</b>, <b>duration</b>, <b>likes</b>, definition, license and category, then <b>sort</b> results any way you like. Search videos, channels and playlists in one place.</p>
+      <p>Prefer no setup? Switch to <b>YouTube URL</b> mode: it builds a youtube.com search link straight from YouTube's own filter parameters, so you get better YouTube search filters with no API key and no quota.</p>
+      <p>Everything runs in your browser. No account, no server, no tracking. <a href="docs.html">Read the docs</a> for the full filter reference and setup guide.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer__inner">
+      <span>zerodig · advanced youtube search</span>
+      <span class="footer__sep">·</span>
+      <span>no server · no tracking · your key stays local</span>
+      <span class="footer__sep">·</span>
+      <span>quota today: <b id="foot-quota" style="color:var(--color-ink-dim)">0</b>/10000</span>
+      <span class="footer__sep">·</span>
+      <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank" rel="noopener">get an api key ↗</a>
+      <span class="footer__sep">·</span>
+      <a href="https://github.com/FlazeIGuess/zerodig/issues/new" target="_blank" rel="noopener">found an issue? ↗</a>
+      <span class="footer__sep">·</span>
+      <a href="https://github.com/FlazeIGuess/zerodig" target="_blank" rel="noopener">source ↗</a>
+      <span class="footer__sep">·</span>
+      <a class="foot-coffee" href="https://ko-fi.com/flazeiguess" target="_blank" rel="noopener">buy me a coffee ↗</a>
+    </div>
+  </footer>
+
+  <script src="app.js?v=12"></script>
+</body>
+</html>

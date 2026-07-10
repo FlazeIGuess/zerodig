@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace">
+  <defs>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1.5" y="2.5" fill="#000000"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#0d0d10"/>
+  <rect width="1200" height="630" fill="url(#scan)" opacity="0.4"/>
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#2b2b31" stroke-width="1.5"/>
+
+  <text x="90" y="150" fill="#7c7c85" font-size="26">user@youtube:~$ ./zerodig --all-filters</text>
+
+  <text x="86" y="300" fill="#f2f2f4" font-size="100" font-weight="700" letter-spacing="-3">advanced</text>
+  <text x="86" y="410" fill="#f2f2f4" font-size="100" font-weight="700" letter-spacing="-3">youtube search<tspan fill="#f2f2f4">&#9622;</tspan></text>
+
+  <text x="90" y="510" fill="#a8a8b0" font-size="30">filter by views &#183; date &#183; duration &#183; license &#183; zero-view</text>
+  <text x="90" y="558" fill="#7c7c85" font-size="26">no api key needed &#183; free &#183; client-side</text>
+</svg>
